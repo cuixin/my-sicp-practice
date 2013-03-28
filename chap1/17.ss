@@ -1,0 +1,47 @@
+(define (double x) (+ x x))
+(define (halve n) (/ n 2))
+; This is using recursive calculation.
+; (define (* a b)
+;     (cond ((= b 0) 0)
+;           ((even? b) (double (* a (halve b))))
+;           (else (+ a (* a (- b 1))))))
+;(* 3 4)
+; (double (* 3 (halve 4)))
+; (double (* 3 2))
+; (double (double (* 3 (halve 2))))
+; (double (double (* 3 1)))
+; (double (double (+ 3 (* 3 (- 1 1)))))
+; (double (double (+ 3 (* 3 0))))
+; (double (double (+ 3 0)))
+; (double (double 3))
+; (double 6)
+; 12
+
+; This is using iterative calculation.
+(define (* a b)
+    (define (iter x y n)
+        (cond ((= n 0) x)
+              ((even? n) (iter x (double y) (halve n)))
+              (else (iter (+ y x) y (- n 1)))))
+    (iter 0 a b))
+
+; (* 3 4)
+; (iter 0 3 4)
+; (iter 0 (double 3) (halve 4))
+; (iter 0 (double 3) 2)
+; (iter 0 6 2)
+; (iter 0 (double 6) (halve 2))
+; (iter 0 (double 6) 1)
+; (iter 0 12 1)
+; (iter 12 12 (- 1 1))
+; (iter 12 12 0)
+; 12
+
+; (* 3 3)
+; (iter 0 3 3)
+; (iter 3 3 2)
+; (iter 3 (double 3) (halve 2))
+; (iter 3 (double 3) 1)
+; (iter 3 6 1)
+; (iter 9 6 0)
+; 9
